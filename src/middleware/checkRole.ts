@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:24:02
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 23:21:20
+ * @ Modified time: 2019-10-07 23:43:19
  * @ Description: Middleware for checking a users role/permissions
  */
 import { Request, Response, NextFunction } from 'express';
@@ -25,13 +25,21 @@ export const checkRole = (roles: Array<string>) => {
             res.status(401).json( { status: 'USER_NOT_FOUND' } );
         }
 
-        // Check if array of authorized roles includes the user's role
-        if(roles.indexOf(user.role) >= -1) {
-            // User has required role, continue with next middleware/controller
-            next();
-        } else {
-            // user doesn't have required role
-            res.status(401).json( { status: 'PERMISSION_DENIED' } );
+        const userRoles: Array<string> = user.role.split(';') || [];
+
+        // check each required role
+        for(const requiredRole of roles) {
+            // if user is missing a role
+            if(!userRoles.includes(requiredRole)) {
+                res.status(401).json({
+                    status: 'PERMISSION_DENIED'
+                });
+                return;
+            }
         }
+
+        // user has all required roles
+        // continue with controller/middleware
+        next();
     };
 };

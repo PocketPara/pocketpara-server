@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:09:08
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 23:20:44
+ * @ Modified time: 2019-10-07 23:47:23
  * @ Description: Middleware for handling authorisation/jsonwebtokens
  */
 import { Request, Response, NextFunction } from 'express';
@@ -28,9 +28,15 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
 
     // Config defines how long a token is valid (the session duration basically)
     // Send a new refreshed-token with every request
-    const { userId, username } = jwtPayload;
+    const payload = {
+        userId: jwtPayload.id,
+        username: jwtPayload.username,
+        fullname: jwtPayload.fullname,
+        isVerified: jwtPayload.isVerified,
+        email: jwtPayload.email
+    };
     const newToken = jwt.sign(
-        { userId, username},
+        jwtPayload,
         config.jwtSecret,
         { expiresIn: config.sessionDuration }
     );

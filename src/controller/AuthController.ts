@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:49:20
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 23:19:23
+ * @ Modified time: 2019-10-07 23:46:35
  * @ Description: Authentication (jwt) controller
  */
 import { Request, Response } from 'express';
@@ -43,15 +43,26 @@ class AuthController {
             return;
         }
 
+        // Create payload for the jsonwebtoken
+        const payload = {
+            userId: user.id,
+            username: user.username,
+            fullname: user.fullname,
+            isVerified: user.isVerified,
+            email: user.email
+        };
         // Sign JWT, valid for session-duration (config)
         const token: string = jwt.sign(
-            { userId: user.id, username: user.username },
+            payload,
             config.jwtSecret,
             { expiresIn: config.sessionDuration }  
         );
 
         // Send the new JWT as response
-        res.send(token);
+        res.status(200).json({
+            status: 'SUCCESS',
+            token
+        });
     };
     
 
@@ -63,7 +74,7 @@ class AuthController {
         // Get parameters from request body
         const { oldPassword, newPassword } = req.body;
         if(!(oldPassword && newPassword)) {
-            res.status(400).json( { status: 'INVALID_PASSWORD' } );
+            res.status(400).json( { status: 'BAD_REQUEST' } );
             return;
         }
 
@@ -101,7 +112,7 @@ class AuthController {
         userRepository.save(user);
 
         // Return a success code with no content
-        res.status(204).send();
+        res.status(200).json({ status: 'SUCCESS' });
     };
 
 }
