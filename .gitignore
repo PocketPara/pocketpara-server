@@ -4,4 +4,4 @@ package-lock.json
 *.log
 /dist/
 /log/
-
+database.sqlite

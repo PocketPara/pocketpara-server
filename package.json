@@ -1,13 +1,33 @@
 {
-   "name": "jwt-express-typeorm",
+   "name": "pocketpara-server",
    "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
+   "description": "The server for pocketpara",
+   "scripts": {
+      "tsc": "tsc",
+      "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/index.ts",
+      "prod": "tsc && node ./build/app.js",
+      "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/PocketPara/pocketpara-server.git"
+   },
+   "bugs": {
+      "url": "https://github.com/PocketPara/pocketpara-server/issues"
+   },
+   "homepage": "https://github.com/PocketPara/pocketpara-server#readme",
+   "author": "Lukas Fend <fendlukas@pm.me>",
    "devDependencies": {
       "ts-node": "3.3.0",
       "@types/node": "^8.0.29",
       "typescript": "3.3.3333"
    },
    "dependencies": {
+      "@types/bcryptjs": "^2.4.2",
+      "@types/body-parser": "^1.17.1",
+      "@types/cors": "^2.8.6",
+      "@types/helmet": "0.0.44",
+      "@types/jsonwebtoken": "^8.3.4",
       "bcryptjs": "^2.4.3",
       "body-parser": "^1.18.1",
       "class-validator": "^0.10.1",
@@ -19,8 +39,5 @@
       "sqlite3": "^4.0.3",
       "ts-node-dev": "^1.0.0-pre.43",
       "typeorm": "0.2.19"
-   },
-   "scripts": {
-      "start": "ts-node src/index.ts"
    }
 }
