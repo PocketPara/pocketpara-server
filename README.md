@@ -36,6 +36,10 @@ Migrations can be created with the command
 typeorm migration:create -n <MigrationName>
 ```
 
+## Testing
+Every feature should of course be tested before every commit. If an error persists, a new issue should be opened describing the problem in detail.  
+Tests are done using *jest* and *supertest*.
+
 ## IDE Recommendations
 vscode, file icons etc. *todo*
 
@@ -67,3 +71,9 @@ Development database
 
 * **ts-node-dev**  
 Automatically restarts the server on file change events
+
+* **jest**  
+Testing library by facebook
+
+* **supertest**  
+Library for testing Node HTTP-Servers

@@ -2,10 +2,9 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 17:32:46
+ * @ Modified time: 2019-10-07 23:57:13
  * @ Description: Main server entry point
  */
-
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import * as express from "express";
@@ -13,6 +12,7 @@ import * as bodyParser from "body-parser";
 import * as helmet from "helmet";
 import * as cors from "cors";
 import routes from "./routes";
+import config from "./config/config";
 
 //Connects to the Database -> then starts the express
 createConnection()
@@ -26,9 +26,9 @@ createConnection()
     app.use(bodyParser.json());
 
     //Set all routes from routes folder
-    app.use("/", routes);
+    app.use(config.apiEndpoint, routes);
 
-    app.listen(3000, () => {
+    app.listen(config.apiPort, () => {
       console.log("Server started on port 3000!");
     });
   })

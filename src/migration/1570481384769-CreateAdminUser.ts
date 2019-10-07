@@ -1,3 +1,11 @@
+/**
+ * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
+ * @ Create Time: 2019-10-07 22:49:44
+ * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
+ * @ Modified time: 2019-10-07 23:50:22
+ * @ Description: Migration script for creating the initial admin account
+ */
+
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 import { User } from "../models/User";
 
