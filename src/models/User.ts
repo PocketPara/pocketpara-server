@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-08 14:12:46
+ * @ Modified time: 2019-10-08 15:42:38
  * @ Description: Model definition for Users
  */
 import {
@@ -76,7 +76,7 @@ export class User {
     createdAt: Date;
 
     // Account creation ip adress
-    @Column()
+    @Column({ default: "unknown" })
     creationIp: string;
 
     // Last account change

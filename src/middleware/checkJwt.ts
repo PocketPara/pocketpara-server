@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:09:08
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 23:47:23
+ * @ Modified time: 2019-10-08 15:31:06
  * @ Description: Middleware for handling authorisation/jsonwebtokens
  */
 import { Request, Response, NextFunction } from 'express';
@@ -22,7 +22,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
         res.locals.jwtPayload = jwtPayload;
     } catch( error ) {
         // Invalid token, respond with 401 unauthorized
-        res.status(401).json( { status: 'UNAUTHORIZED_TOKEN_ERROR' } );
+        res.status(401).json( { status: 'PERMISSION_DENIED' } );
         return;
     }
 
@@ -36,9 +36,11 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
         email: jwtPayload.email
     };
     const newToken = jwt.sign(
-        jwtPayload,
+        payload,
         config.jwtSecret,
-        { expiresIn: config.sessionDuration }
+        { 
+            expiresIn: config.sessionDuration 
+        }
     );
 
     // Send the new token in the header

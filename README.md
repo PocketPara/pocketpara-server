@@ -38,10 +38,11 @@ typeorm migration:create -n <MigrationName>
 
 ## Testing
 Every feature should of course be tested before every commit. If an error persists, a new issue should be opened describing the problem in detail.  
-Tests are done using *jest* and *supertest*.
+Tests are done using *(todo)*.
 
 ## IDE Recommendations
-vscode, file icons etc. *todo*
+For vs-code, the `material-icon-theme` helps navigating as the package has special icons for the different directory names.  
+Also the plugin `auto-header` should be used (Hotkey `Ctrl+Alt+I`) to generate the comment headers.
 
 ## Libraries
 
@@ -72,8 +73,4 @@ Development database
 * **ts-node-dev**  
 Automatically restarts the server on file change events
 
-* **jest**  
-Testing library by facebook
-
-* **supertest**  
-Library for testing Node HTTP-Servers
+* *todo: tests*

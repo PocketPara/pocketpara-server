@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 23:20:20
+ * @ Modified time: 2019-10-08 15:49:07
  * @ Description: (Login-) User controller
  */
 import { Request, Response } from 'express';
@@ -12,6 +12,21 @@ import { validate } from 'class-validator';
 import { User } from "../models/User";
 
 class UserController {
+
+    static listProps: Array<string> = [
+        "id", 
+        "username", 
+        "role", 
+        "fullname", 
+        "email", 
+        "isVerified", 
+        "verifiedAt", 
+        "verifiedFrom", 
+        "createdAt", 
+        "updatedAt", 
+        "lastLoginIp", 
+        "creationIp"
+    ];
     
     static listAll = async (req: Request, res: Response) => {
 
@@ -20,7 +35,7 @@ class UserController {
         
         const users = await userRepository.find({
             // Filter the following arguments (no password hashes...)
-            select: ["id", "username", "role"]
+            select: <any>UserController.listProps
         });
 
         // Send the users object
@@ -40,7 +55,7 @@ class UserController {
         try {
             user = await userRepository.findOneOrFail(id, {
                 // Filter the following arguments (no password hashes...)
-                select: ["id", "username", "role"]
+                select: <any>UserController.listProps
             });
         } catch(error) {
             res.status(404).json( { status: 'USER_NOT_FOUND' } );
@@ -54,13 +69,23 @@ class UserController {
     static newUser = async (req: Request, res: Response) => {
 
         // Get parameters from body
-        const { username, password, role } = req.body;
+        const { 
+            username, 
+            password, 
+            role, 
+            email, 
+            isVerified,
+            fullname
+        } = req.body;
 
         // Initialize new object from the model
         let user: User = new User();
 
         user.username = username;
-        user.role = role;
+        user.role = role || "";
+        user.fullname = fullname || null;
+        user.isVerified = isVerified || false;
+        user.email = email;
         // Hash & set password
         user.setPassword(password);
 
@@ -93,7 +118,14 @@ class UserController {
         const id = req.params.id;
 
         // Get values from body
-        const { username, role } = req.body;
+        const { 
+            username, 
+            password, 
+            role, 
+            email, 
+            isVerified,
+            fullname
+        } = req.body;
 
         // Attempt to find user in database
         const userRepository = getRepository(User);
@@ -106,9 +138,15 @@ class UserController {
             return;
         }
 
+        // Assign new values, fallback to initial ones
+        user.username = username || user.username;
+        user.setPassword(password);
+        user.role = role || user.role;
+        user.email = email || user.email;
+        user.isVerified = isVerified || user.isVerified;
+        user.fullname = fullname || user.fullname;
+        
         // Validate new values on model
-        user.username = username;
-        user.role = role;
         const errors = await validate(user);
         if(errors.length > 0) {
             // Errors were thrown, send an error
@@ -125,7 +163,7 @@ class UserController {
         }
 
         // Send 204, (no content but accepted)
-        res.status(204).json( { status: 'SUCCESS' } );
+        res.status(200).json( { status: 'SUCCESS' } );
     };
 
 
@@ -148,7 +186,7 @@ class UserController {
         userRepository.delete(id);
 
         // Send 204 (no content but accepted)
-        res.status(204).json( { status: 'SUCCESS' } );
+        res.status(200).json( { status: 'SUCCESS' } );
         
 
     };

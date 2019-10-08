@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:01:58
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 17:32:12
+ * @ Modified time: 2019-10-08 15:48:04
  * @ Description: Main route handler for all /user requests
  */
 
@@ -29,7 +29,7 @@ router.get(
 
 // Create a new user
 router.post(
-    '/', 
+    '/add', 
     [checkJwt, checkRole(["ADMIN"])], 
     UserController.newUser
 );
@@ -42,7 +42,7 @@ router.patch(
 );
 
 // Delete a user
-router.patch(
+router.delete(
     '/:id([0-9]+)',
     [checkJwt, checkRole(["ADMIN"])],
     UserController.deleteUser
