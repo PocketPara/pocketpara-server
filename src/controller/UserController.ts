@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-08 15:49:07
+ * @ Modified time: 2019-10-09 00:28:24
  * @ Description: (Login-) User controller
  */
 import { Request, Response } from 'express';
@@ -59,9 +59,13 @@ class UserController {
             });
         } catch(error) {
             res.status(404).json( { status: 'USER_NOT_FOUND' } );
+            return;
         }
 
-        res.status(200).json({ user });
+        res.status(200).json({ 
+            status: 'SUCCESS',
+            user 
+        });
 
     };
 
@@ -92,7 +96,10 @@ class UserController {
         // Validate parameters
         const errors = await validate(user);
         if(errors.length > 0) {
-            res.status(400).json( { status: 'BAD_REQUEST', errors } );
+            res.status(400).json({ 
+                status: 'BAD_REQUEST', 
+                errors 
+            });
             return;
         }
 
@@ -185,7 +192,7 @@ class UserController {
         // Delete the user
         userRepository.delete(id);
 
-        // Send 204 (no content but accepted)
+        // Send success
         res.status(200).json( { status: 'SUCCESS' } );
         
 
