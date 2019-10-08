@@ -26,7 +26,7 @@ Now you can start the server for development with the command
 ```bash
 npm start
 ```
-***Note**: Since an admin user is required to create more users, you need to create an admin first. You can do so by running the migration command `npm run migration:run`, which will create a user called `admin` with password `admin`.*
+***Note**: Since an admin user is required to create more users, you need to create an admin first. You can do so by running the migration command `npm run migration:run`, which will create a user called `admin` with password `admin`. A normal user with the name and password `devtest` will also be created.*
 
 ## Updating Models
 Whenever models are updated, the database needs to be migrated of course. There's a good explaination on db-migration on typeorm [here](https://typeorm.io/#/migrations).
