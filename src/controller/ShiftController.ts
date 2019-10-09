@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 22:20:29
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 23:04:39
+ * @ Modified time: 2019-10-10 00:21:25
  * @ Description: Shift-controller (all user's shifts)
  */
 import { Request, Response } from 'express';
@@ -191,6 +191,120 @@ class ShiftController {
             status: 'SUCCESS',
             shifts
         });
+
+    };
+
+    static edit = async(req: Request, res: Response) => {
+        
+        // Get id from url
+        const shiftId = req.params.id;
+
+        // Get user's id from the jwt
+        const id: number = res.locals.jwtPayload.userId;
+
+        // Get new values from body
+        const {
+            date,
+            carId,
+            cycle,
+            type,
+            crew
+        } = req.body;
+
+        // Attempt to find the user in the db
+        const userRepository = getRepository(User);
+        let user: User;
+        try {
+            user = await userRepository.findOneOrFail(id);
+        }  catch(error) {
+            // Not found, send 404 response
+            res.status(404).json({ status: 'USER_NOT_FOUND'});
+            return;
+        }
+
+        // user was found, now search the shift
+        const shiftRepository = getRepository(Shift);
+        let shift: Shift;
+        try {
+            shift = await shiftRepository.findOneOrFail({
+                where: {
+                    id: shiftId,
+                    user
+                }
+            });
+        } catch(error) {
+            // not found or no permission
+            res.status(404).json({
+                status: 'SHIFT_NOT_FOUND'
+            });
+            return;
+        }
+
+        // if car changed
+        if(carId) {
+            const carRepository = getRepository(Car);
+            let car: Car;
+            try {
+                car = await carRepository.findOneOrFail({
+                    where: {
+                        id: carId,
+                        user
+                    }
+                });
+            } catch(error) {
+                // invalid car id or user doesnt own
+                res.status(404).json({
+                    status: 'CAR_NOT_FOUND'
+                });
+                return;
+            }
+
+            // car found
+            shift.car = car;
+        }
+
+        // now update values
+        shift.cycle = cycle || shift.cycle;
+        shift.date = date || shift.date;
+        shift.type = type || shift.type;
+        if(crew) {
+            shift.crew = (typeof crew === 'string') ? crew : (typeof crew === 'object') ? JSON.stringify(crew) : '[]';
+        }
+
+        // validate new data
+        const errors = await validate(shift);
+        if(errors.length > 0) {
+            res.status(400).json({
+                status: 'BAD_REQUEST',
+                errors
+            });
+            return;
+        }
+
+        // attempt to save
+        try {
+            await shiftRepository.save(shift);
+        } catch(error) {
+            res.status(500).json({
+                status: 'INTERNAL_SERVER_ERROR'
+            });
+            return;
+        }
+
+        // Success
+        res.status(200).json({
+            status: 'SUCCESS',
+            shift: {
+                id: shift.id,
+                date: shift.date,
+                carId: carId || shift.carId,
+                cycle: shift.cycle,
+                type: shift.type,
+                crew: shift.crew
+            }
+        });
+
+
 
     };
 

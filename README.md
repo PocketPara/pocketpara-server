@@ -74,4 +74,7 @@ Development database
 * **ts-node-dev**  
 Automatically restarts the server on file change events
 
+* **sendgrid/mail**  
+API for sending mails through sendgrid
+
 * *todo: tests*
