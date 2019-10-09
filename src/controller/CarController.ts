@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 19:55:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 21:07:05
+ * @ Modified time: 2019-10-09 22:02:00
  * @ Description: Car-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -16,7 +16,7 @@ class CarController {
     static add = async (req: Request, res: Response) => {
 
         // Check if required information was sent
-        const { code, description } = req.body;
+        const { code, description, order } = req.body;
 
         // Get the user's id from jwt
         const id: number = res.locals.jwtPayload.userId;
@@ -50,6 +50,7 @@ class CarController {
         car.code = code;
         car.description = description || "";
         car.user = user;
+        car.order = order || 0;
 
         // Make sure the data is valid
         const errors = await validate(car);
@@ -81,8 +82,8 @@ class CarController {
             car: {
                 code: car.code,
                 description: car.description,
-                id: car.id
-                // TODO: order once done
+                id: car.id,
+                order: car.order
             }
         }); 
 
@@ -141,7 +142,8 @@ class CarController {
         // Get new values from body
         const {
             code,
-            description
+            description,
+            order
         } = req.body;
 
         // Attempt to find the user in the db
@@ -179,6 +181,7 @@ class CarController {
         // assign new values
         car.code = code || car.code;
         car.description = description || car.description;
+        car.order = order || car.order;
 
         // Validate new values on model
         const errors = await validate(car);
@@ -207,7 +210,8 @@ class CarController {
             car: {
                 code: car.code,
                 description: car.description,
-                id: car.id
+                id: car.id,
+                order: car.order
             }
         });
 
