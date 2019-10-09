@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 00:28:24
+ * @ Modified time: 2019-10-09 22:07:29
  * @ Description: (Login-) User controller
  */
 import { Request, Response } from 'express';
@@ -25,7 +25,8 @@ class UserController {
         "createdAt", 
         "updatedAt", 
         "lastLoginIp", 
-        "creationIp"
+        "creationIp",
+        "language"
     ];
     
     static listAll = async (req: Request, res: Response) => {

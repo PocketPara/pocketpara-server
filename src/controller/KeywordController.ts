@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:41:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 21:59:10
+ * @ Modified time: 2019-10-09 22:27:40
  * @ Description: Keyword-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -29,9 +29,7 @@ class KeywordController {
             return;
         }
 
-        // Initialize a new keyword
-        let keyword: Keyword = new Keyword();
-
+        
         // Get the user that wants to create the keyword
         const userRepository = getRepository(User);
         let user: User;
@@ -42,6 +40,10 @@ class KeywordController {
             return;
         }
 
+        // Initialize a new keyword
+        let keyword: Keyword = new Keyword();
+        
+        
         // user was found at this point
         // assign the values to the new keyword
         keyword.description = description || "";

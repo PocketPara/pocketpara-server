@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:49:20
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 23:46:35
+ * @ Modified time: 2019-10-09 22:06:43
  * @ Description: Authentication (jwt) controller
  */
 import { Request, Response } from 'express';
@@ -49,7 +49,8 @@ class AuthController {
             username: user.username,
             fullname: user.fullname,
             isVerified: user.isVerified,
-            email: user.email
+            email: user.email,
+            language: user.language
         };
         // Sign JWT, valid for session-duration (config)
         const token: string = jwt.sign(

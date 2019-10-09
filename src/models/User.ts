@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 21:15:41
+ * @ Modified time: 2019-10-09 22:06:06
  * @ Description: Model definition for Users
  */
 import {
@@ -28,6 +28,12 @@ export class User {
     @Column()
     @Length(4,20)
     username: string;
+
+    @Column({
+        default: 'en'
+    })
+    @Length(2)
+    language: string;
 
     // Email adress
     @Column()

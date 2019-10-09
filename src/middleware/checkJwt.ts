@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:09:08
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-08 15:31:06
+ * @ Modified time: 2019-10-09 22:06:31
  * @ Description: Middleware for handling authorisation/jsonwebtokens
  */
 import { Request, Response, NextFunction } from 'express';
@@ -33,7 +33,8 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
         username: jwtPayload.username,
         fullname: jwtPayload.fullname,
         isVerified: jwtPayload.isVerified,
-        email: jwtPayload.email
+        email: jwtPayload.email,
+        language: jwtPayload.language
     };
     const newToken = jwt.sign(
         payload,

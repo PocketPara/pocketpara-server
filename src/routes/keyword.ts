@@ -2,11 +2,11 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:40:50
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 00:22:29
+ * @ Modified time: 2019-10-09 22:20:36
  * @ Description: Main route handler for all /keyword requests
  */
 import { Router } from 'express';
-import KeywordController from '../controller/KeywordController';
+import KeywordController from "../controller/KeywordController";
 import { checkJwt } from '../middleware/checkJwt';
 
 const router: Router = Router();
