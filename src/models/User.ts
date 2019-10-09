@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-08 15:42:38
+ * @ Modified time: 2019-10-09 21:15:41
  * @ Description: Model definition for Users
  */
 import {
@@ -87,6 +87,10 @@ export class User {
     // The IP the user logged in the last time
     @Column({ nullable: true })
     lastLoginIp: string;
+
+    // The google-login token
+    @Column({ nullable: true })
+    googleIdToken: string;
 
     /**
      * Hashes & sets the a password

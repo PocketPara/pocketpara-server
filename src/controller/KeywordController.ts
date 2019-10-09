@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:41:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 20:14:04
+ * @ Modified time: 2019-10-09 21:59:10
  * @ Description: Keyword-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -16,7 +16,7 @@ class KeywordController {
     static add = async (req: Request, res: Response) => {
 
         // Check if required information was sent
-        const { name, description } = req.body;
+        const { name, description, order } = req.body;
         // Get user's id from the jwt
         const id: number = res.locals.jwtPayload.userId;
     
@@ -47,6 +47,7 @@ class KeywordController {
         keyword.description = description || "";
         keyword.name = name;
         keyword.user = user;
+        keyword.order = order || 0;
 
         // make sure the data is valid
         const errors = await validate(keyword);
@@ -139,7 +140,8 @@ class KeywordController {
         // Get new values from body
         const {
             name,
-            description
+            description,
+            order
         } = req.body;
 
         // Attempt to find the user in the db
@@ -176,6 +178,7 @@ class KeywordController {
         // assign new values
         keyword.name = name || keyword.name;
         keyword.description = description || keyword.description;
+        keyword.order = order || keyword.order;
 
         // Validate new values on model
         const errors = await validate(keyword);
@@ -204,6 +207,7 @@ class KeywordController {
             keyword: {
                 name: keyword.name,
                 description: keyword.description,
+                order: keyword.order,
                 id: keyword.id
             }
         });

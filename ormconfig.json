@@ -1,20 +1,24 @@
 {
-   "type": "sqlite",
-   "database": "database.sqlite",
-   "synchronize": true,
-   "logging": false,
-   "entities": [
-      "src/models/**/*.ts"
-   ],
-   "migrations": [
-      "src/migration/**/*.ts"
-   ],
-   "subscribers": [
-      "src/subscriber/**/*.ts"
-   ],
-   "cli": {
-      "entitiesDir": "src/models",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
-   }
-}
+    "type": "mysql",
+    "database": "pocketpara",
+    "host": "localhost",
+    "port": 3306,
+    "username": "pocketpara",
+    "password": "pocketpara_testing",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+       "src/models/**/*.ts"
+    ],
+    "migrations": [
+       "src/migration/**/*.ts"
+    ],
+    "subscribers": [
+       "src/subscriber/**/*.ts"
+    ],
+    "cli": {
+       "entitiesDir": "src/models",
+       "migrationsDir": "src/migration",
+       "subscribersDir": "src/subscriber"
+    }
+ }

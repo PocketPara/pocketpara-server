@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:24:02
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-07 23:43:19
+ * @ Modified time: 2019-10-09 21:38:24
  * @ Description: Middleware for checking a users role/permissions
  */
 import { Request, Response, NextFunction } from 'express';
@@ -23,6 +23,7 @@ export const checkRole = (roles: Array<string>) => {
             user = await userRepository.findOneOrFail(id);
         } catch(id) {
             res.status(401).json( { status: 'USER_NOT_FOUND' } );
+            return;
         }
 
         const userRoles: Array<string> = user.role.split(';') || [];

@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:33:15
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 19:58:05
+ * @ Modified time: 2019-10-09 21:59:11
  * @ Description: Model definition for keywords
  */
 import {
@@ -36,9 +36,6 @@ export class Keyword {
     description: string;
 
     // Defines how they are ordered for the user
-    // FIXME: Generates invalid SQL-Statement???
-    // TODO: Add controller implementation for column below
-    /*@Column()
-    @Generated()
-    order: number;*/
+    @Column({nullable: true, default: 0 })
+    order: number;
 };
