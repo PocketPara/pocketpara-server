@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 22:12:21
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 23:02:36
+ * @ Modified time: 2019-10-10 15:33:14
  * @ Description: Model definition for shifts
  */
 import {
@@ -50,6 +50,6 @@ export class Shift {
 
     // The crew on the car
     // Stored as JSON...
-    @Column({ default: "[]"})
+    @Column({ nullable: true, default: '[]'})
     crew: string;
 };

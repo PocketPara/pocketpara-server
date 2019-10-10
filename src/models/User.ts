@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 22:06:06
+ * @ Modified time: 2019-10-10 17:38:16
  * @ Description: Model definition for Users
  */
 import {
@@ -34,6 +34,15 @@ export class User {
     })
     @Length(2)
     language: string;
+
+    @Column()
+    pgpPublicKey: string;
+
+    @Column()
+    pgpPrivateKey: string;
+
+    @Column({ nullable: true })
+    pgpRevocationCertificate: string;
 
     // Email adress
     @Column()

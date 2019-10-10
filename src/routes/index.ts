@@ -2,10 +2,9 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:06:32
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 22:23:59
+ * @ Modified time: 2019-10-10 17:25:54
  * @ Description: Main route handler, combines all other route handlers
  */
-
 import { Router } from 'express';
 import auth from "./auth";
 import user from "./user";

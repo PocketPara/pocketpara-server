@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 22:07:29
+ * @ Modified time: 2019-10-10 17:38:38
  * @ Description: (Login-) User controller
  */
 import { Request, Response } from 'express';
@@ -26,7 +26,10 @@ class UserController {
         "updatedAt", 
         "lastLoginIp", 
         "creationIp",
-        "language"
+        "language",
+        "pgpPublicKey",
+        "pgpPrivateKey",
+        "pgpRevocationCertificate"
     ];
     
     static listAll = async (req: Request, res: Response) => {
@@ -80,7 +83,10 @@ class UserController {
             role, 
             email, 
             isVerified,
-            fullname
+            fullname,
+            pgpPublicKey,
+            pgpPrivateKey,
+            pgpRevocationCertificate
         } = req.body;
 
         // Initialize new object from the model
@@ -91,6 +97,9 @@ class UserController {
         user.fullname = fullname || null;
         user.isVerified = isVerified || false;
         user.email = email;
+        user.pgpPrivateKey = pgpPrivateKey;
+        user.pgpPublicKey = pgpPublicKey;
+        user.pgpRevocationCertificate = pgpRevocationCertificate || null;
         // Hash & set password
         user.setPassword(password);
 
