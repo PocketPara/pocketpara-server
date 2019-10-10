@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 17:28:40
+ * @ Modified time: 2019-10-10 22:34:18
  * @ Description: Main server entry point
  */
 import "reflect-metadata";

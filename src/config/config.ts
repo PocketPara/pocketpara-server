@@ -4,7 +4,7 @@ import Role from "../enums/Role";
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:29:51
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 21:38:59
+ * @ Modified time: 2019-10-10 22:28:34
  * @ Description: Main config file for the server
  */
 
@@ -36,13 +36,8 @@ export default {
     // All crypto-options
     cryptography: {
         symmetrical: {
-            // Algorithm: AES 256 cbc
-            algorithm: 'aes-256-cbc',
-            // Key, obviously changed on deployment
-            // Generate with crypto.randomBytes(256/8).toString('hex')
-            key: '21f49d09bd888cc45b85dcd6d09e0f761f1f1b63f7ff155c31a7c0c8b6b7addd',
-            // Initialisation vector
-            initVectorLength: 16,
+            // Encryption key
+            key: '21f49d09bd888cc45b85dcd6d09e0f761f1f1b63f7ff155c31a7c0c8b6b7addd'
         },
         asymmetrical: {
             // Key size in bits

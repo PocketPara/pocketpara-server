@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:49:20
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 21:57:00
+ * @ Modified time: 2019-10-10 22:16:32
  * @ Description: Authentication (jwt) controller
  */
 import { Request, Response } from 'express';
@@ -47,11 +47,13 @@ class AuthController {
         // Set language, fallback to english
         user.language = (config.permittedLangs.indexOf(language) >= 0) ? language : 'en';
         // Public key
-        user.pgpPublicKey = publicKey;
+        user.setPublicKey(publicKey);
         // Private key (encrypt first)
         user.setPrivateKey(privateKey);
         // Revocation cert
-        user.pgpRevocationCertificate = revocationCert || null;
+        if(revocationCert) {
+            user.setRevocationCertificate(revocationCert);
+        }
         // Full name
         user.fullname = fullname || "";
         // Google token
@@ -143,7 +145,9 @@ class AuthController {
         // Send the new JWT as response
         res.status(200).json({
             status: 'SUCCESS',
-            token
+            token,
+            publicKey: user.getPublicKey(),
+            privateKey: user.getPrivateKey()
         });
     };
     

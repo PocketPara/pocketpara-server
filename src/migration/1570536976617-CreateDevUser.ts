@@ -2,13 +2,14 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 14:16:16
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 21:26:30
+ * @ Modified time: 2019-10-10 22:13:46
  * @ Description: Migration script for creating the dev user account
  */
 
 import {MigrationInterface, QueryRunner, getRepository} from 'typeorm';
 import { User } from "../models/User";
 import CryptoHelperPGP from '../helpers/CryptoHelperPGP';
+import config from '../config/config';
 
 export class CreateDevUser1570536976617 implements MigrationInterface {
 
@@ -19,7 +20,7 @@ export class CreateDevUser1570536976617 implements MigrationInterface {
         user.setPassword("devtest");
         user.fullname = "Development Account";
         user.isVerified = true;
-        user.role = "";
+        user.role = config.userDefaultRoles.join(';');
         user.creationIp = "127.0.0.1";
 
         const keySet = await CryptoHelperPGP.generateKeyPair(
@@ -29,8 +30,8 @@ export class CreateDevUser1570536976617 implements MigrationInterface {
         );
         
         user.setPrivateKey(keySet.privateKey);
-        user.pgpPublicKey = keySet.publicKey;
-        user.pgpRevocationCertificate = keySet.revocationCertificate;
+        user.setPublicKey(keySet.publicKey);
+        user.setRevocationCertificate(keySet.revocationCertificate);
 
         const userRepository = getRepository(User);
         await userRepository.save(user);

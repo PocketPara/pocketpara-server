@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 21:55:16
+ * @ Modified time: 2019-10-10 22:35:34
  * @ Description: Model definition for Users
  */
 import {
@@ -14,6 +14,7 @@ import {
     UpdateDateColumn
 } from 'typeorm';
 import { Length, IsNotEmpty } from 'class-validator';
+import { base64encode, base64decode } from 'nodejs-base64';
 import * as bcrypt from 'bcryptjs';
 import CryptoHelperAES from '../helpers/CryptoHelperAES';
 
@@ -109,19 +110,35 @@ export class User {
     @Column({ nullable: true })
     googleIdToken: string;
 
+
+    setPublicKey(publicKey: string) {
+        this.pgpPublicKey = base64encode(publicKey);
+    }
+    getPublicKey(): string {
+        return base64decode(this.pgpPublicKey);
+    }
+
+    setRevocationCertificate(revocationCertificate: string) {
+        this.pgpRevocationCertificate = base64encode(revocationCertificate);
+    }
+    getRevocationCertificate(): string {
+        return base64decode(this.pgpRevocationCertificate);
+    }
+
+
     /**
      * Encrypts and saves the user's private key
      * @param {string} privateKey The new private key
      */
     setPrivateKey(privateKey: string) {
-        this.pgpPrivateKey = CryptoHelperAES.encrypt(privateKey);
+        this.pgpPrivateKey = base64encode(CryptoHelperAES.encrypt(privateKey));
     }
 
     /**
      * Decrypts and returns the user's private key
      */
-    getPrivateKey() {
-        return CryptoHelperAES.decrypt(this.pgpPrivateKey);
+    getPrivateKey(): string {
+        return CryptoHelperAES.decrypt(base64decode(this.pgpPrivateKey));
     }
 
     /**

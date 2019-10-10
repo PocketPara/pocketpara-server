@@ -2,13 +2,15 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 22:49:44
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 21:26:18
+ * @ Modified time: 2019-10-10 22:13:29
  * @ Description: Migration script for creating the initial admin account
  */
 
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 import { User } from "../models/User";
 import CryptoHelperPGP from '../helpers/CryptoHelperPGP';
+import config from '../config/config';
+import Role from '../enums/Role';
 
 
 export class CreateAdminUser1570481384769 implements MigrationInterface {
@@ -20,7 +22,7 @@ export class CreateAdminUser1570481384769 implements MigrationInterface {
         user.fullname = "Administrator";
         user.creationIp = "127.0.0.1";
         user.setPassword("admin");
-        user.role = "ADMIN";
+        user.role = [...config.userDefaultRoles, Role.ADMIN].join(';');
         user.isVerified = true;
 
         const keySet = await CryptoHelperPGP.generateKeyPair(
@@ -30,8 +32,8 @@ export class CreateAdminUser1570481384769 implements MigrationInterface {
         );
         
         user.setPrivateKey(keySet.privateKey);
-        user.pgpPublicKey = keySet.publicKey;
-        user.pgpRevocationCertificate = keySet.revocationCertificate;
+        user.setPublicKey(keySet.publicKey);
+        user.setRevocationCertificate(keySet.revocationCertificate);
 
         const userRepository = getRepository(User);
         await userRepository.save(user);

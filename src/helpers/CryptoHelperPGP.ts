@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 17:30:45
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 18:10:33
+ * @ Modified time: 2019-10-10 22:36:30
  * @ Description: PGP encryption wrapper for simplified use
  */
 import openpgp from 'openpgp';
@@ -12,7 +12,7 @@ export default class CryptoHelperPGP {
 
     static async generateKeyPair(username, mail, password): Promise<any> {
         const options = {
-            userIds: [{ name: username, email: mail }],
+            userIds: [{ name: "PocketPara_User::" + username, email: mail }],
             rsaBits: config.cryptography.asymmetrical.keySize,
             passphrase: config.cryptography.asymmetrical.passphrasePrefix + password + "_"
         };
