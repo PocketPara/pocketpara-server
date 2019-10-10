@@ -1,0 +1,127 @@
+{
+    "entries": [
+        { 
+            "title": "Allergy & Immunology",
+            "language": "en"
+        },
+        {
+            "title": "Dermatology",
+            "language": "en"
+        },
+        {
+            "title": "Internal",
+            "language": "en"
+        },
+        {
+            "title": "Neurology",
+            "language": "en"
+        },
+        {
+            "title": "Gynecology",
+            "language": "en"
+        },
+        {
+            "title": "Pediatric",
+            "language": "en"
+        },
+        {
+            "title": "Psychiatry",
+            "language": "en"
+        },
+        {
+            "title": "Oncology",
+            "language": "en"
+        },
+        {
+            "title": "Surgery",
+            "language": "en"
+        },
+        {
+            "title": "Urology",
+            "language": "en"
+        },
+        {
+            "title": "Traumatology",
+            "language": "en"
+        },
+        {
+            "title": "ENT (Ear-Nose-Throat)",
+            "language": "en"
+        },
+        {
+            "title": "Dentistry",
+            "language": "en"
+        },
+        {
+            "title": "Cardiology",
+            "language": "en"
+        },{
+            "title": "> others",
+            "language": "en"
+        },
+
+
+
+
+        { 
+            "title": "Allergie & Immunologie",
+            "language": "de"
+        },
+        {
+            "title": "Dermatologie",
+            "language": "de"
+        },
+        {
+            "title": "Interne",
+            "language": "de"
+        },
+        {
+            "title": "Neurologie",
+            "language": "de"
+        },
+        {
+            "title": "Gynekologie",
+            "language": "de"
+        },
+        {
+            "title": "Pädiatrie",
+            "language": "de"
+        },
+        {
+            "title": "Psychatrie",
+            "language": "de"
+        },
+        {
+            "title": "Onkologie",
+            "language": "de"
+        },
+        {
+            "title": "Chirurgie",
+            "language": "de"
+        },
+        {
+            "title": "Urologie",
+            "language": "de"
+        },
+        {
+            "title": "Traumatologie",
+            "language": "de"
+        },
+        {
+            "title": "HNO (Hals-Nase-Ohren)",
+            "language": "de"
+        },
+        {
+            "title": "Zahn/Kiefer",
+            "language": "de"
+        },
+        {
+            "title": "Kardiologie",
+            "language": "de"
+        },
+        {
+            "title": "> sonstige",
+            "language": "de"
+        }
+    ]
+}
