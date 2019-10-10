@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:33:15
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 18:16:49
+ * @ Modified time: 2019-10-10 22:41:16
  * @ Description: Model definition for keywords
  */
 import {
@@ -10,8 +10,7 @@ import {
     Column,
     PrimaryGeneratedColumn,
     JoinColumn,
-    ManyToOne,
-    Generated
+    ManyToOne
 } from 'typeorm';
 import { User } from "./User";
 
@@ -34,6 +33,9 @@ export class Keyword {
     // The color of the keyword
     @Column({ default: '#232323' })
     color: string;
+
+    @Column({ default: true })
+    isEmergency: boolean;
 
     // A description for the keyword (e.g. Emergency, O2-Transport etc.)
     @Column({ nullable: true })

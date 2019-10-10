@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:41:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 18:18:00
+ * @ Modified time: 2019-10-10 22:42:14
  * @ Description: Keyword-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -16,7 +16,7 @@ class KeywordController {
     static add = async (req: Request, res: Response) => {
 
         // Check if required information was sent
-        const { name, description, order, color } = req.body;
+        const { name, description, order, color, isEmergency } = req.body;
         // Get user's id from the jwt
         const id: number = res.locals.jwtPayload.userId;
     
@@ -51,6 +51,7 @@ class KeywordController {
         keyword.user = user;
         keyword.order = order || 0;
         keyword.color = color || '#232323';
+        keyword.isEmergency = isEmergency || true;
 
         // make sure the data is valid
         const errors = await validate(keyword);
@@ -83,7 +84,8 @@ class KeywordController {
                 description: keyword.description,
                 id: keyword.id,
                 color: keyword.color,
-                order: keyword.order
+                order: keyword.order,
+                isEmergency: keyword.isEmergency
             }
         });
     
@@ -146,6 +148,7 @@ class KeywordController {
             name,
             description,
             order,
+            isEmergency,
             color
         } = req.body;
 
@@ -185,6 +188,7 @@ class KeywordController {
         keyword.description = description || keyword.description;
         keyword.order = order || keyword.order;
         keyword.color = color || keyword.color;
+        keyword.isEmergency = isEmergency || keyword.isEmergency;
 
         // Validate new values on model
         const errors = await validate(keyword);
