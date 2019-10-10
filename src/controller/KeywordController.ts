@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:41:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:42:14
+ * @ Modified time: 2019-10-10 22:46:48
  * @ Description: Keyword-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -188,7 +188,7 @@ class KeywordController {
         keyword.description = description || keyword.description;
         keyword.order = order || keyword.order;
         keyword.color = color || keyword.color;
-        keyword.isEmergency = isEmergency || keyword.isEmergency;
+        keyword.isEmergency = (isEmergency != null) ? <boolean>isEmergency : false;
 
         // Validate new values on model
         const errors = await validate(keyword);
@@ -219,6 +219,7 @@ class KeywordController {
                 description: keyword.description,
                 order: keyword.order,
                 color: keyword.color,
+                isEmergency: keyword.isEmergency,
                 id: keyword.id
             }
         });
