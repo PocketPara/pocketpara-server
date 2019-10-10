@@ -1,8 +1,10 @@
+import Role from "../enums/Role";
+
 /**
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:29:51
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 17:34:41
+ * @ Modified time: 2019-10-10 21:38:59
  * @ Description: Main config file for the server
  */
 
@@ -12,6 +14,21 @@ export default {
     apiEndpoint: '/',
     // The port the server will start on
     apiPort: 3000,
+    // Available languages
+    permittedLangs: ["en","de"],
+    // Default roles of normal users
+    userDefaultRoles: [
+        // customisation
+        Role.CUSTOMIZE_CARS,
+        Role.CUSTOMIZE_KEYWORDS,
+        // tracking system
+        Role.TRA_SHIFT_TRACKER,
+        Role.TRA_SHIFT_STATISTICS,
+        Role.TRA_MISSION_STATISTICS,
+        Role.TRA_MISSION_TRACKER
+        // medical system
+        //TODO: add here and manually to users after development is done
+    ],
     // Jsonwebtoken crypto-key, feel free to change (prod-key is saved elsewhere later on)
     jwtSecret: 'UAUg3PwB^A?7wY9UcXpJk/!3d~kT6ft<',
     // Session duration for jsonwebtoken (format: https://github.com/zeit/ms)

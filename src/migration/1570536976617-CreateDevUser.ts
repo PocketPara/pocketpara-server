@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 14:16:16
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 18:11:22
+ * @ Modified time: 2019-10-10 21:26:30
  * @ Description: Migration script for creating the dev user account
  */
 
@@ -28,7 +28,7 @@ export class CreateDevUser1570536976617 implements MigrationInterface {
             "devtest"
         );
         
-        user.pgpPrivateKey = keySet.privateKey;
+        user.setPrivateKey(keySet.privateKey);
         user.pgpPublicKey = keySet.publicKey;
         user.pgpRevocationCertificate = keySet.revocationCertificate;
 

@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 17:38:16
+ * @ Modified time: 2019-10-10 21:55:16
  * @ Description: Model definition for Users
  */
 import {
@@ -15,9 +15,11 @@ import {
 } from 'typeorm';
 import { Length, IsNotEmpty } from 'class-validator';
 import * as bcrypt from 'bcryptjs';
+import CryptoHelperAES from '../helpers/CryptoHelperAES';
 
 @Entity()
 @Unique(["username"])
+@Unique(["googleIdToken"])
 export class User {
 
     // Primary key/id
@@ -72,7 +74,7 @@ export class User {
     @Column({
         nullable: true
     })
-    @Length(4, 50)
+    @Length(0, 50)
     fullname: string;
 
     // User's password hash
@@ -108,10 +110,25 @@ export class User {
     googleIdToken: string;
 
     /**
+     * Encrypts and saves the user's private key
+     * @param {string} privateKey The new private key
+     */
+    setPrivateKey(privateKey: string) {
+        this.pgpPrivateKey = CryptoHelperAES.encrypt(privateKey);
+    }
+
+    /**
+     * Decrypts and returns the user's private key
+     */
+    getPrivateKey() {
+        return CryptoHelperAES.decrypt(this.pgpPrivateKey);
+    }
+
+    /**
      * Hashes & sets the a password
      * @param {string} newPassword The new password (plaintext)
      */
-    setPassword(newPassword) {
+    setPassword(newPassword: string) {
         this.password = bcrypt.hashSync(newPassword, 8);
     }
 

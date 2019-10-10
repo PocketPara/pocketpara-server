@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:49:20
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 22:06:43
+ * @ Modified time: 2019-10-10 21:57:00
  * @ Description: Authentication (jwt) controller
  */
 import { Request, Response } from 'express';
@@ -14,6 +14,87 @@ import { User } from "../models/User";
 import config from "../config/config";
 
 class AuthController {
+
+    static register = async(req: Request, res: Response) => {
+        const {
+            username,
+            language,
+            publicKey,
+            privateKey,
+            revocationCert,
+            email,
+            fullname,
+            password,
+            googleIdToken
+        } = req.body;
+
+        const creationIp = <string>req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+        // Check for required arguments
+        if(!(username && publicKey && privateKey && email && password)) {
+            res.status(400).json({
+                status: 'BAD_REQUEST'
+            });
+            return;
+        }
+
+
+        // Initialize new user
+        let user: User = new User();
+
+        // Set values
+        user.username = username;
+        // Set language, fallback to english
+        user.language = (config.permittedLangs.indexOf(language) >= 0) ? language : 'en';
+        // Public key
+        user.pgpPublicKey = publicKey;
+        // Private key (encrypt first)
+        user.setPrivateKey(privateKey);
+        // Revocation cert
+        user.pgpRevocationCertificate = revocationCert || null;
+        // Full name
+        user.fullname = fullname || "";
+        // Google token
+        user.googleIdToken = googleIdToken || null;
+        // Email
+        user.email = email;
+        // Password
+        user.setPassword(password);
+        // Default unverified
+        user.isVerified = false;
+        // TODO: send verification email here
+        user.role = config.userDefaultRoles.join(';');
+        // Set creation ip
+        user.creationIp = creationIp;
+
+
+        // Verify all data is valid
+        const errors = await validate(user);
+        if(errors.length > 0) {
+            res.status(400).json({
+                status: 'BAD_REQUEST'
+            });
+            return;
+        }
+
+        // Attempt to save
+        const userRepository = getRepository(User);
+        try {
+            await userRepository.save(user);
+        } catch(error) {
+            // Send 409 conflict when user is taken (either name or google id)
+            res.status(409).json({
+                status: 'USERNAME_TAKEN'
+            });
+            return;
+        }
+
+        // Everything worked, send 201
+        res.status(201).json({
+            status: 'SUCCESS'
+        });
+
+    };
 
     static login = async(req: Request, res: Response) => {
 
