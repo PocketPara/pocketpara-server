@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:41:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 22:27:40
+ * @ Modified time: 2019-10-10 18:18:00
  * @ Description: Keyword-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -16,7 +16,7 @@ class KeywordController {
     static add = async (req: Request, res: Response) => {
 
         // Check if required information was sent
-        const { name, description, order } = req.body;
+        const { name, description, order, color } = req.body;
         // Get user's id from the jwt
         const id: number = res.locals.jwtPayload.userId;
     
@@ -50,6 +50,7 @@ class KeywordController {
         keyword.name = name;
         keyword.user = user;
         keyword.order = order || 0;
+        keyword.color = color || '#232323';
 
         // make sure the data is valid
         const errors = await validate(keyword);
@@ -80,8 +81,9 @@ class KeywordController {
             keyword: {
                 name: keyword.name,
                 description: keyword.description,
-                id: keyword.id
-                // TODO: order once done
+                id: keyword.id,
+                color: keyword.color,
+                order: keyword.order
             }
         });
     
@@ -143,7 +145,8 @@ class KeywordController {
         const {
             name,
             description,
-            order
+            order,
+            color
         } = req.body;
 
         // Attempt to find the user in the db
@@ -181,6 +184,7 @@ class KeywordController {
         keyword.name = name || keyword.name;
         keyword.description = description || keyword.description;
         keyword.order = order || keyword.order;
+        keyword.color = color || keyword.color;
 
         // Validate new values on model
         const errors = await validate(keyword);
@@ -210,6 +214,7 @@ class KeywordController {
                 name: keyword.name,
                 description: keyword.description,
                 order: keyword.order,
+                color: keyword.color,
                 id: keyword.id
             }
         });

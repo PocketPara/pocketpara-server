@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:33:15
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 21:59:11
+ * @ Modified time: 2019-10-10 18:16:49
  * @ Description: Model definition for keywords
  */
 import {
@@ -30,6 +30,10 @@ export class Keyword {
     // The name of the keyword (e.g. r2na, A2, etc.)
     @Column()
     name: string;
+
+    // The color of the keyword
+    @Column({ default: '#232323' })
+    color: string;
 
     // A description for the keyword (e.g. Emergency, O2-Transport etc.)
     @Column({ nullable: true })
