@@ -1,36 +1,34 @@
 /**
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Create Time: 2019-10-08 23:41:56
+ * @ Create Time: 2019-10-10 23:01:05
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 23:08:41
- * @ Description: Keyword-controller (user-defined ones)
+ * @ Modified time: 2019-10-10 23:33:08
+ * @ Description: Controller for user-defined events 
  */
-import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import { validate } from 'class-validator';
-import { Keyword } from "../models/Keyword";
-import { User } from "../models/User";
 
-class KeywordController {
+import { Request, Response } from "express";
+import { getRepository } from "typeorm";
+import { User } from "../models/User";
+import { UserEvent } from "../models/UserEvent";
+import { validate } from "class-validator";
+
+class UserEventController {
 
     static add = async (req: Request, res: Response) => {
 
-        // Check if required information was sent
-        const { name, description, order, color, isEmergency } = req.body;
-        // Get user's id from the jwt
+        // Get data from body
+        const { name, order } = req.body;
+
+        // Get the user's id from the jwt
         const id: number = res.locals.jwtPayload.userId;
-    
-        // Only name is required,
-        // description will default to ""
+
+        // Only name is required, check if it was set
         if(!(name)) {
-            // The data was not passed properly,
-            // send bad request
             res.status(400).json({ status: 'BAD_REQUEST' });
             return;
         }
 
-        
-        // Get the user that wants to create the keyword
+        // Serach for the user
         const userRepository = getRepository(User);
         let user: User;
         try {
@@ -39,22 +37,17 @@ class KeywordController {
             res.status(404).json({ status: 'USER_NOT_FOUND' });
             return;
         }
-        // user was found at this point
 
-        // Initialize a new keyword
-        let keyword: Keyword = new Keyword();
-        
-        
-        // assign the values to the new keyword
-        keyword.description = description || "";
-        keyword.name = name;
-        keyword.user = user;
-        keyword.order = order || 0;
-        keyword.color = color || '#232323';
-        keyword.isEmergency = isEmergency || true;
+        // Initialize a new userevent
+        let userEvent: UserEvent = new UserEvent();
 
-        // make sure the data is valid
-        const errors = await validate(keyword);
+        // assign values
+        userEvent.name = name;
+        userEvent.user = user;
+        userEvent.order = order || 0;
+
+        // make sure data is valid
+        const errors = await validate(userEvent);
         if(errors.length > 0) {
             // error
             res.status(400).json({
@@ -63,10 +56,10 @@ class KeywordController {
             return;
         }
 
-        // Data is valid at this point
-        const keywordRepository = getRepository(Keyword);
+        // Data is valid, try to insert
+        const userEventRepository = getRepository(UserEvent);
         try {
-            await keywordRepository.save(keyword);
+            await userEventRepository.save(userEvent);
         } catch(error) {
             res.status(500).json({
                 status: 'INTERNAL_SERVER_ERROR'
@@ -78,25 +71,22 @@ class KeywordController {
         // Everything worked, send 201 (created)
         res.status(201).json({
             status: 'SUCCESS',
-            keyword: {
-                name: keyword.name,
-                description: keyword.description,
-                id: keyword.id,
-                color: keyword.color,
-                order: keyword.order,
-                isEmergency: keyword.isEmergency
+            userEvent: {
+                name: userEvent.name,
+                order: userEvent.order,
+                id: userEvent.id
             }
         });
-    
+
 
     };
 
     static listCurrentUser = async (req: Request, res: Response) => {
 
-        // Get user's id from the jwt
+        // Get the user's id from the jwt
         const id: number = res.locals.jwtPayload.userId;
 
-        // Get the user from the database
+        // Get the user from the db
         const userRepository = getRepository(User);
         let user: User;
         try {
@@ -108,16 +98,16 @@ class KeywordController {
             return;
         }
 
-        // Get the keywords from the database
-        const keywordRepository = getRepository(Keyword);
-        let keywords: Keyword[];
+        // Get the events from the database
+        const userEventRepository = getRepository(UserEvent);
+        let userEvents: UserEvent[];
         try {
-            keywords = await keywordRepository.find({
+            userEvents = await userEventRepository.find({
                 where: {
                     user
                 }
             });
-        } catch(error) {
+        } catch(error)  {
             res.status(500).json({
                 status: 'INTERNAL_SERVER_ERROR'
             });
@@ -125,30 +115,26 @@ class KeywordController {
             return;
         }
 
-        // Keywords were found at this point
+        // User events were found!
         res.status(200).json({
             status: 'SUCCESS',
-            keywords
+            userEvents
         });
-
 
     };
 
     static edit = async (req: Request, res: Response) => {
 
-        // Get id from the url
-        const keywordId = req.params.id;
+        // Get the id from the url
+        const userEventId = req.params.id;
 
-        // Get user's id from the jwt
+        // Get the users id from jwt
         const id: number = res.locals.jwtPayload.userId;
 
         // Get new values from body
         const {
             name,
-            description,
-            order,
-            isEmergency,
-            color
+            order
         } = req.body;
 
         // Attempt to find the user in the db
@@ -162,35 +148,31 @@ class KeywordController {
             return;
         }
 
-        // user was found at this point, now search for the keyword
-        // note: Also add user to query, to verify it's the owner
-        const keywordRepository = getRepository(Keyword);
-        let keyword: Keyword;
+        // user found, now search for the event
+        const userEventRepository = getRepository(UserEvent);
+        let userEvent: UserEvent;
         try {
-            keyword = await keywordRepository.findOneOrFail({
+            userEvent = await userEventRepository.findOneOrFail({
                 where: {
-                    id: keywordId,
+                    id: userEventId,
                     user
                 }
             });
         } catch(error) {
-            // not found, or its not the user's
+            // not found, or not the user's
             res.status(404).json({
-                status: 'KEYWORD_NOT_FOUND'
+                status: 'EVENT_NOT_FOUND'
             });
             return;
         }
 
-        // Keyword found at this point
+        // Event was found,
         // assign new values
-        keyword.name = name || keyword.name;
-        keyword.description = description || keyword.description;
-        keyword.order = order || keyword.order;
-        keyword.color = color || keyword.color;
-        keyword.isEmergency = (isEmergency != null) ? <boolean>isEmergency : false;
+        userEvent.name = name || userEvent.name;
+        userEvent.order = order || userEvent.order;
 
         // Validate new values on model
-        const errors = await validate(keyword);
+        const errors = await validate(userEvent);
         if(errors.length > 0) {
             res.status(400).json({
                 status: 'BAD_REQUEST',
@@ -201,7 +183,7 @@ class KeywordController {
 
         // attempt to save
         try {
-            await keywordRepository.save(keyword);
+            await userEventRepository.save(userEvent);
         } catch(error) {
             // Unknown error, no db connection maybe?
             res.status(500).json({
@@ -213,24 +195,22 @@ class KeywordController {
         // Success!
         res.status(200).json({
             status: 'SUCCESS',
-            keyword: {
-                name: keyword.name,
-                description: keyword.description,
-                order: keyword.order,
-                color: keyword.color,
-                isEmergency: keyword.isEmergency,
-                id: keyword.id
+            userEvent: {
+                id: userEvent.id,
+                name: userEvent.name,
+                order: userEvent.order
             }
         });
+
 
     };
 
     static delete = async (req: Request, res: Response) => {
+        
+        // Get the event id from the url
+        const userEventId = req.params.id;
 
-        // Get id from the url
-        const keywordId = req.params.id;
-
-        // Get user's id from the jwt
+        // Get the user's id from the jwt
         const id: number = res.locals.jwtPayload.userId;
 
         // Find the user
@@ -243,35 +223,33 @@ class KeywordController {
             return;
         }
 
-        // Find the keyword
-        const keywordRepository = getRepository(Keyword);
-        let keyword: Keyword;
-        // filter for user & keyword (makes sure its the user's own)
+        // user found, now search for the event
+        const userEventRepository = getRepository(UserEvent);
+        let userEvent: UserEvent;
         try {
-            keyword = await keywordRepository.findOneOrFail({
+            userEvent = await userEventRepository.findOneOrFail({
                 where: {
-                    user,
-                    id: keywordId
+                    id: userEventId,
+                    user
                 }
             });
         } catch(error) {
-            // no matching keyword found
+            // not found, or not the user's
             res.status(404).json({
-                status: 'KEYWORD_NOT_FOUND'
+                status: 'EVENT_NOT_FOUND'
             });
             return;
         }
 
-        // keyword was found
-        keywordRepository.delete(keywordId);
+        // event found, delete
+        userEventRepository.delete(userEventId);
 
-        // send success
         res.status(200).json({
             status: 'SUCCESS'
         });
 
-    };
 
+    };
 }
 
-export default KeywordController;
+export default UserEventController;
