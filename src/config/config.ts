@@ -4,7 +4,7 @@ import Role from "../enums/Role";
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:29:51
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:55:42
+ * @ Modified time: 2019-10-14 18:53:34
  * @ Description: Main config file for the server
  */
 
@@ -13,7 +13,7 @@ export default {
     // every other route will be below this one
     apiEndpoint: '/',
     // The port the server will start on
-    apiPort: 3000,
+    apiPort: 3001,
     // Available languages
     permittedLangs: ["en","de"],
     // Default roles of normal users

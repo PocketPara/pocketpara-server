@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:49:20
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:16:32
+ * @ Modified time: 2019-10-14 21:56:39
  * @ Description: Authentication (jwt) controller
  */
 import { Request, Response } from 'express';
@@ -31,12 +31,13 @@ class AuthController {
         const creationIp = <string>req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
         // Check for required arguments
-        if(!(username && publicKey && privateKey && email && password)) {
-            res.status(400).json({
+        if(!(username && email && password)) {
+            res.status(200).json({
                 status: 'BAD_REQUEST'
             });
             return;
         }
+        
 
 
         // Initialize new user
@@ -46,14 +47,17 @@ class AuthController {
         user.username = username;
         // Set language, fallback to english
         user.language = (config.permittedLangs.indexOf(language) >= 0) ? language : 'en';
-        // Public key
-        user.setPublicKey(publicKey);
-        // Private key (encrypt first)
-        user.setPrivateKey(privateKey);
-        // Revocation cert
-        if(revocationCert) {
-            user.setRevocationCertificate(revocationCert);
+        if((publicKey && privateKey)) {
+            // Public key
+            user.setPublicKey(publicKey);
+            // Private key (encrypt first)
+            user.setPrivateKey(privateKey);
+            // Revocation cert
+            if(revocationCert) {
+                user.setRevocationCertificate(revocationCert);
+            }
         }
+        
         // Full name
         user.fullname = fullname || "";
         // Google token
@@ -73,7 +77,7 @@ class AuthController {
         // Verify all data is valid
         const errors = await validate(user);
         if(errors.length > 0) {
-            res.status(400).json({
+            res.status(200).json({
                 status: 'BAD_REQUEST'
             });
             return;
@@ -84,8 +88,7 @@ class AuthController {
         try {
             await userRepository.save(user);
         } catch(error) {
-            // Send 409 conflict when user is taken (either name or google id)
-            res.status(409).json({
+            res.status(200).json({
                 status: 'USERNAME_TAKEN'
             });
             return;
@@ -104,7 +107,7 @@ class AuthController {
         const { username, password } = req.body;
         if(!(username && password)) {
             // Send bad request response
-            res.status(400).json( { status: 'BAD_REQUEST' } );
+            res.status(200).json( { status: 'BAD_REQUEST' } );
             return;
         }
 
@@ -115,14 +118,14 @@ class AuthController {
             user = await userRepository.findOneOrFail({ where: { username }});
         } catch( error ) {
             // user was not found
-            res.status(401).json( { status: 'USER_NOT_FOUND' } );
+            res.status(200).json( { status: 'USER_NOT_FOUND' } );
             return;
         }
 
         // Check if password matches
         if(!user.validateUnencryptedPassword(password)) {
             // Invalid password
-            res.status(401).json( { status: 'INVALID_PASSWORD' } );
+            res.status(200).json( { status: 'INVALID_PASSWORD' } );
             return;
         }
 

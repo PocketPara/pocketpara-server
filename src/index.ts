@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:34:18
+ * @ Modified time: 2019-10-14 18:59:53
  * @ Description: Main server entry point
  */
 import "reflect-metadata";
@@ -29,7 +29,7 @@ createConnection()
     app.use(config.apiEndpoint, routes);
 
     app.listen(config.apiPort, () => {
-      console.log("Server started on port 3000!");
+      console.log("Server started on port " + config.apiPort);
     });
   })
   .catch(error => console.log(error));

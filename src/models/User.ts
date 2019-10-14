@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:35:34
+ * @ Modified time: 2019-10-14 21:55:34
  * @ Description: Model definition for Users
  */
 import {
@@ -38,10 +38,10 @@ export class User {
     @Length(2)
     language: string;
 
-    @Column()
+    @Column({nullable: true})
     pgpPublicKey: string;
 
-    @Column()
+    @Column({nullable: true})
     pgpPrivateKey: string;
 
     @Column({ nullable: true })
