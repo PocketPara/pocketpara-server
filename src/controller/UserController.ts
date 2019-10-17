@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 16:34:00
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 17:38:38
+ * @ Modified time: 2019-10-16 12:05:19
  * @ Description: (Login-) User controller
  */
 import { Request, Response } from 'express';
@@ -31,6 +31,39 @@ class UserController {
         "pgpPrivateKey",
         "pgpRevocationCertificate"
     ];
+
+    static current = async (req: Request, res: Response) => {
+
+        // Get user's id from the jwt
+        const id: number = res.locals.jwtPayload.userId;
+
+        // Get user repository
+        const userRepository = getRepository(User);
+        // attempt to find the user
+        let user: User;
+        try {
+            user = await userRepository.findOneOrFail(id);
+        } catch( error ) {
+            res.status(200).json({
+                status: 'USER_NOT_FOUND'
+            });
+            return;
+        }
+
+        res.status(200).json({
+            status: 'SUCCESS',
+            user: {
+                id: user.id,
+                username: user.username,
+                language: user.language,
+                email: user.email,
+                isVerified: user.isVerified,
+                fullname: user.fullname,
+                roles: user.role.split(';')
+            }
+        });
+        
+    }
     
     static listAll = async (req: Request, res: Response) => {
 
@@ -128,6 +161,53 @@ class UserController {
 
     };
 
+    static editCurrentUser = async(req: Request, res: Response) => {
+        // Get user's id from the jwt
+        const id: number = res.locals.jwtPayload.userId;
+
+        // Get values from body
+        const {
+            fullname,
+            email,
+            language
+        } = req.body;
+
+        const userRepository = getRepository(User);
+        let user: User;
+        try {
+            user = await userRepository.findOneOrFail(id);
+        } catch( error ) {
+            res.status(200).json({
+                status: 'USER_NOT_FOUND'
+            });
+            return;
+        }
+
+        user.fullname = fullname || user.fullname;
+        user.email = email ||user.email;
+        user.language = (language == 'de') ? 'de' : (language == 'en') ? 'en' : user.language;
+
+        // Validate new values on model
+        const errors = await validate(user);
+        if(errors.length > 0) {
+            // Errors were thrown, send an error
+            res.status(200).json( { status: 'BAD_REQUEST' } );
+            return;
+        }
+
+        // Attempt to save, if its fails -> username already taken
+        try {
+            await userRepository.save(user);
+        } catch(error) {
+            res.status(200).json( { status: 'USERNAME_TAKEN' } );
+            return;
+        }
+
+        // Send success
+        res.status(200).json( { status: 'SUCCESS' } );
+
+
+    };
 
     static editUser = async (req: Request, res: Response) => {
 

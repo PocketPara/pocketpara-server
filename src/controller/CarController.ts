@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 19:55:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 22:02:00
+ * @ Modified time: 2019-10-16 13:56:46
  * @ Description: Car-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -50,7 +50,7 @@ class CarController {
         car.code = code;
         car.description = description || "";
         car.user = user;
-        car.order = order || 0;
+        car.order = order || Date.now();
 
         // Make sure the data is valid
         const errors = await validate(car);
@@ -100,7 +100,7 @@ class CarController {
         try {
             user = await userRepository.findOneOrFail(id);
         } catch(error) {
-            res.status(404).json({
+            res.status(200).json({
                 status: 'USER_NOT_FOUND'
             });
             return;
@@ -113,6 +113,10 @@ class CarController {
             cars = await carRepository.find({
                 where: {
                     user
+                },
+                order: {
+                    order: 'ASC',
+                    code: 'ASC'
                 }
             });
         } catch(error) {

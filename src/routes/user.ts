@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:01:58
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:01:47
+ * @ Modified time: 2019-10-16 12:05:56
  * @ Description: Main route handler for all /user requests
  */
 
@@ -13,6 +13,19 @@ import { checkRole } from "../middleware/checkRole";
 import Role from '../enums/Role';
 
 const router = Router();
+
+// Get current user
+router.get(
+    '/current',
+    [checkJwt],
+    UserController.current
+);
+// Edit current user
+router.patch(
+    '/current',
+    [checkJwt],
+    UserController.editCurrentUser
+);
 
 // Get all users
 router.get(

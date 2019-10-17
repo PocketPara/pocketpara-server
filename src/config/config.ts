@@ -4,7 +4,7 @@ import Role from "../enums/Role";
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:29:51
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-14 18:53:34
+ * @ Modified time: 2019-10-16 12:48:17
  * @ Description: Main config file for the server
  */
 
@@ -18,10 +18,6 @@ export default {
     permittedLangs: ["en","de"],
     // Default roles of normal users
     userDefaultRoles: [
-        // customisation
-        Role.CUSTOMIZE_CARS,
-        Role.CUSTOMIZE_KEYWORDS,
-        Role.CUSTOMIZE_EVENTS,
         // tracking system
         Role.TRA_SHIFT_TRACKER,
         Role.TRA_SHIFT_STATISTICS,

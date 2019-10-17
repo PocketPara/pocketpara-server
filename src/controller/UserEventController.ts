@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 23:01:05
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 23:33:08
+ * @ Modified time: 2019-10-16 12:50:09
  * @ Description: Controller for user-defined events 
  */
 
@@ -44,7 +44,7 @@ class UserEventController {
         // assign values
         userEvent.name = name;
         userEvent.user = user;
-        userEvent.order = order || 0;
+        userEvent.order = order || Date.now();
 
         // make sure data is valid
         const errors = await validate(userEvent);

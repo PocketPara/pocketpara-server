@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:41:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 23:08:41
+ * @ Modified time: 2019-10-16 12:49:52
  * @ Description: Keyword-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -49,7 +49,7 @@ class KeywordController {
         keyword.description = description || "";
         keyword.name = name;
         keyword.user = user;
-        keyword.order = order || 0;
+        keyword.order = order || Date.now();
         keyword.color = color || '#232323';
         keyword.isEmergency = isEmergency || true;
 
