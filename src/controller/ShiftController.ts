@@ -18,7 +18,7 @@ class ShiftController {
         "id",
         "date",
         "cycle",
-        "type",
+        //"type",
         "crew",
         "carId"
     ];
@@ -30,7 +30,7 @@ class ShiftController {
             date,
             carId,
             cycle,
-            type,
+            //type,
             crew
         } = req.body;
 
@@ -93,7 +93,7 @@ class ShiftController {
         shift.user = user;
         shift.date = date;
         shift.cycle = cycle || 0;
-        shift.type = type || "?";
+        //shift.type = type || "?";
         // If string -> direct, if array -> stringify,
         // else just default back to []
         shift.crew = (typeof crew === 'string') ? crew : (typeof crew === 'object') ? JSON.stringify(crew) : '[]';
@@ -129,7 +129,7 @@ class ShiftController {
                 date: shift.date,
                 car: shift.car,
                 cycle: shift.cycle,
-                type: shift.type,
+                //type: shift.type,
                 crew: shift.crew
             }
         });
@@ -207,7 +207,7 @@ class ShiftController {
             date,
             carId,
             cycle,
-            type,
+            //type,
             crew
         } = req.body;
 
@@ -266,7 +266,7 @@ class ShiftController {
         // now update values
         shift.cycle = cycle || shift.cycle;
         shift.date = date || shift.date;
-        shift.type = type || shift.type;
+        //shift.type = type || shift.type;
         if(crew) {
             shift.crew = (typeof crew === 'string') ? crew : (typeof crew === 'object') ? JSON.stringify(crew) : '[]';
         }
@@ -299,7 +299,7 @@ class ShiftController {
                 date: shift.date,
                 carId: carId || shift.carId,
                 cycle: shift.cycle,
-                type: shift.type,
+                //type: shift.type,
                 crew: shift.crew
             }
         });

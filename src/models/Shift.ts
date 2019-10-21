@@ -45,9 +45,9 @@ export class Shift {
 
     // The shift type (e.g. RTW, KTW etc.)
     // free input possible
-    @Column({ default: '?' })
+    /*@Column({ default: '?' })
     type: string;
-
+	*/
     // The crew on the car
     // Stored as JSON...
     @Column({ nullable: true, default: '[]'})

@@ -51,7 +51,7 @@ class KeywordController {
         keyword.user = user;
         keyword.order = order || Date.now();
         keyword.color = color || '#232323';
-        keyword.isEmergency = isEmergency || true;
+        keyword.isEmergency = (isEmergency != null) ? isEmergency : true;
 
         // make sure the data is valid
         const errors = await validate(keyword);
@@ -115,6 +115,10 @@ class KeywordController {
             keywords = await keywordRepository.find({
                 where: {
                     user
+                },
+				order: {
+                    order: 'ASC',
+                    name: 'ASC'
                 }
             });
         } catch(error) {

@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 19:55:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-16 13:56:46
+ * @ Modified time: 2019-10-21 21:56:39
  * @ Description: Car-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -112,7 +112,8 @@ class CarController {
         try {
             cars = await carRepository.find({
                 where: {
-                    user
+                    user,
+                    active: true
                 },
                 order: {
                     order: 'ASC',
@@ -262,8 +263,9 @@ class CarController {
             return;
         }
 
-        // car was found, delete it
-        carRepository.delete(carId);
+        // car was found, mark it as inactive
+        car.active = false;
+        carRepository.save(car);
 
         // send success
         res.status(200).json({

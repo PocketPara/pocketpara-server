@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 19:57:30
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-09 22:01:07
+ * @ Modified time: 2019-10-21 21:55:48
  * @ Description: Model definition for cars
  */
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
@@ -31,5 +31,9 @@ export class Car {
     // Defines how they are ordered for the user
     @Column({nullable: true, default: 0 })
     order: number;
+
+    // sets active
+    @Column({ default: true })
+    active: boolean;
 
 }
