@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 22:20:29
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 00:21:25
+ * @ Modified time: 2019-10-21 22:49:37
  * @ Description: Shift-controller (all user's shifts)
  */
 import { Request, Response } from 'express';
@@ -305,6 +305,73 @@ class ShiftController {
         });
 
 
+
+    };
+
+    static listColleagues = async(req: Request, res: Response) => {
+
+        // Get user's id from the jwt
+        const id: number = res.locals.jwtPayload.userId;
+
+        // Get user from db
+        const userRepository = getRepository(User);
+        let user: User;
+        try {
+            user = await userRepository.findOneOrFail(id);
+        } catch(error) {
+            res.status(404).json({
+                status: 'USER_NOT_FOUND'
+            });
+            return;
+        }
+
+        // Get the shifts
+        let shiftRepository = getRepository(Shift);
+        let shifts: Shift[];
+        try {
+            shifts = await shiftRepository.find({
+                where: {
+                    user
+                },
+                select: ['crew']
+            });
+        } catch(error) {
+            res.status(200).json({
+                status: 'BAD_REQUEST'
+            });
+        }
+
+        let memberList = [];
+        /*
+        *   format: {
+                identifier: 'firstname;lastname',
+                firstname, lastname
+            }
+        */
+        for(let shift of shifts) {
+            const crew = JSON.parse(shift.crew);
+            for(let person of crew) {
+                const identifier = person.firstname + '_' + person.lastname;
+                memberList[identifier] = {
+                    firstname: person.firstname,
+                    lastname: person.lastname
+                };
+                
+            }
+        }
+        let colleagues = [];
+        for(let key in memberList) {
+            const person = memberList[key];
+            colleagues.push({
+                firstname: person.firstname,
+                lastname: person.lastname
+            });
+        }
+
+        res.status(200).json({
+            status: 'SUCCESS',
+            colleagues
+        });
 
     };
 

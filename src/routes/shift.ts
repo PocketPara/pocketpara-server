@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 22:19:12
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:01:10
+ * @ Modified time: 2019-10-21 22:35:42
  * @ Description: Main route handler for all /shift requests
  */
 import { Router } from 'express';
@@ -21,5 +21,8 @@ router.get('/', [checkJwt,checkRole([Role.TRA_SHIFT_TRACKER])], ShiftController.
 
 // Edits a shift
 router.patch('/:id', [checkJwt,checkRole([Role.TRA_SHIFT_TRACKER])], ShiftController.edit);
+
+// Lists all colleagues
+router.get('/colleagues', [checkJwt,checkRole([Role.TRA_SHIFT_TRACKER])], ShiftController.listColleagues)
 
 export default router;
