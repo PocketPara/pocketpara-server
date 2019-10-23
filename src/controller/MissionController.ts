@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-23 22:50:18
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-23 23:49:56
+ * @ Modified time: 2019-10-23 23:51:28
  * @ Description: Mission controller
  */
 import { Request, Response } from "express";
@@ -204,14 +204,16 @@ class MissionController {
             event.userEvents = userEventIds;
             event.shiftId = event.shift.id;
             event.shift = undefined;
+            event.alarmtext = undefined;
+            event.improvementNotes = undefined;
         }
         
         
-
+    
         // Success!
         res.status(200).json({
             status: 'SUCCESS',
-            ue
+            missions: ue
         });
     };
 
