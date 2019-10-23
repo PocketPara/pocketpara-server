@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 19:18:04
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 19:41:29
+ * @ Modified time: 2019-10-23 22:16:03
  * @ Description: Model definition for missions
  */
 import { Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
@@ -20,6 +20,9 @@ export class MedicalCategory {
     // the name of the category
     @Column()
     title: string;
+
+    @Column({ default: '#232323' })
+    color: string;
 
     // the language of the word
     @Column()

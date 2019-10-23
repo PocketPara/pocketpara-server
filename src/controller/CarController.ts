@@ -112,8 +112,8 @@ class CarController {
         try {
             cars = await carRepository.find({
                 where: {
-                    user,
-                    active: true
+                    user/*,
+                    active: true*/
                 },
                 order: {
                     order: 'ASC',

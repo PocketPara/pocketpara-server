@@ -2,10 +2,10 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 18:19:36
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 22:58:50
+ * @ Modified time: 2019-10-23 23:33:26
  * @ Description: Model definition for missions
  */
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 import { Shift } from './Shift';
 import { Keyword } from './Keyword';
 import { MedicalCategory } from './MedicalCategory';
@@ -21,28 +21,46 @@ export class Mission {
     // the shift id
     @ManyToOne( type => Shift )
     @JoinColumn()
-    user: Shift;
+    shift: Shift;
+
+    // Doesnt' create new field, just for reuests
+    @Column()
+    shiftId: number;
 
     // the keyword id
     @ManyToOne( type => Keyword )
     @JoinColumn()
     keyword: Keyword;
 
+    // Doesnt' create new field, just for reuests
+    @Column()
+    keywordId: number;
+
+    @ManyToOne( type => Keyword )
+    keywordUpdate: Keyword;
+
+    // Doesnt' create new field, just for reuests
+    @Column()
+    keywordUpdateId: number;
+
     // the medical category assigned to the mission
     @ManyToOne( type => MedicalCategory )
     @JoinColumn()
     medicalCategory: MedicalCategory;
 
+    // Doesnt' create new field, just for reuests
+    @Column()
+    medicalCategoryId: number;
+
     //ENCRYPTED: The text of the alarm
-    @Column({ default: "" })
+    @Column({ default: null, nullable: true })
     alarmtext: string;
 
-    @Column({ default: "" })
+    @Column({ default: null, nullable: true })
     improvementNotes: string;
 
     @ManyToMany( type => UserEvent )
-    @JoinColumn()
+    @JoinTable()
     userEvents: UserEvent[];
-    
 
 }

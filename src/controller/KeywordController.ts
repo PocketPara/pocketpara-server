@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-08 23:41:56
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-16 12:49:52
+ * @ Modified time: 2019-10-23 23:13:58
  * @ Description: Keyword-controller (user-defined ones)
  */
 import { Request, Response } from 'express';
@@ -197,8 +197,7 @@ class KeywordController {
         const errors = await validate(keyword);
         if(errors.length > 0) {
             res.status(400).json({
-                status: 'BAD_REQUEST',
-                errors
+                status: 'BAD_REQUEST'
             });
             return;
         }

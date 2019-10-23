@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 19:47:51
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 19:56:28
+ * @ Modified time: 2019-10-23 22:38:32
  * @ Description: Controller for handling medical categories
  */
 import { Request, Response } from 'express';
@@ -41,7 +41,7 @@ class MedicalCategoryController {
                     title: 'ASC'
                 },
                 // no need to search the language again
-                select: ["id","title"]
+                select: ["id","title","color"]
             });
         } catch(error) {
             res.status(500).json({

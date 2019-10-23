@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:49:20
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-14 21:56:39
+ * @ Modified time: 2019-10-23 22:45:45
  * @ Description: Authentication (jwt) controller
  */
 import { Request, Response } from 'express';
@@ -149,8 +149,10 @@ class AuthController {
         res.status(200).json({
             status: 'SUCCESS',
             token,
+            language: user.language ||'en'
+            /*,
             publicKey: user.getPublicKey(),
-            privateKey: user.getPrivateKey()
+            privateKey: user.getPrivateKey()*/
         });
     };
     

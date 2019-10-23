@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 19:25:02
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 19:42:54
+ * @ Modified time: 2019-10-23 22:16:36
  * @ Description: Migration script for loading the default medical categories 
  *                from the JSON into the database
  */
@@ -20,6 +20,7 @@ export class CreateStaticsMedicalCategory1570728302117 implements MigrationInter
             let newCat = new MedicalCategory();
             newCat.language = category.language;
             newCat.title = category.title;
+            newCat.color = category.color;
             medCats.push(newCat);
         }
 

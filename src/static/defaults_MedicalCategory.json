@@ -2,126 +2,77 @@
     "entries": [
         { 
             "title": "Allergy & Immunology",
-            "language": "en"
+            "language": "en",
+            "color": "#03A9F4"
         },
         {
             "title": "Dermatology",
-            "language": "en"
+            "language": "en",
+            "color": "#CDDC39"
         },
         {
             "title": "Internal",
-            "language": "en"
+            "language": "en",
+            "color": "#2196F3"
         },
         {
             "title": "Neurology",
-            "language": "en"
+            "language": "en",
+            "color": "#FF9800"
         },
         {
             "title": "Gynecology",
-            "language": "en"
+            "language": "en",
+            "color": "#FF8EB4"
         },
         {
             "title": "Pediatric",
-            "language": "en"
+            "language": "en",
+            "color": "#E91E63"
         },
         {
             "title": "Psychiatry",
-            "language": "en"
+            "language": "en",
+            "color": "#795548"
         },
         {
             "title": "Oncology",
-            "language": "en"
+            "language": "en",
+            "color": "#8BC34A"
         },
         {
             "title": "Surgery",
-            "language": "en"
+            "language": "en",
+            "color": "#4CAF50"
         },
         {
             "title": "Urology",
-            "language": "en"
+            "language": "en",
+            "color": "#009688"
         },
         {
             "title": "Traumatology",
-            "language": "en"
+            "language": "en",
+            "color": "#FF0000"
         },
         {
             "title": "ENT (Ear-Nose-Throat)",
-            "language": "en"
+            "language": "en",
+            "color": "#607D8B"
         },
         {
             "title": "Dentistry",
-            "language": "en"
+            "language": "en",
+            "color": "#232323"
         },
         {
             "title": "Cardiology",
-            "language": "en"
+            "language": "en",
+            "color": "#00BCD4"
         },{
             "title": "> others",
-            "language": "en"
-        },
-
-
-
-
-        { 
-            "title": "Allergie & Immunologie",
-            "language": "de"
-        },
-        {
-            "title": "Dermatologie",
-            "language": "de"
-        },
-        {
-            "title": "Interne",
-            "language": "de"
-        },
-        {
-            "title": "Neurologie",
-            "language": "de"
-        },
-        {
-            "title": "Gynäkologie",
-            "language": "de"
-        },
-        {
-            "title": "Pädiatrie",
-            "language": "de"
-        },
-        {
-            "title": "Psychatrie",
-            "language": "de"
-        },
-        {
-            "title": "Onkologie",
-            "language": "de"
-        },
-        {
-            "title": "Chirurgie",
-            "language": "de"
-        },
-        {
-            "title": "Urologie",
-            "language": "de"
-        },
-        {
-            "title": "Traumatologie",
-            "language": "de"
-        },
-        {
-            "title": "HNO (Hals-Nase-Ohren)",
-            "language": "de"
-        },
-        {
-            "title": "Zahn/Kiefer",
-            "language": "de"
-        },
-        {
-            "title": "Kardiologie",
-            "language": "de"
-        },
-        {
-            "title": "> sonstige",
-            "language": "de"
+            "language": "en",
+            "color": "#FAFAFA"
         }
     ]
 }

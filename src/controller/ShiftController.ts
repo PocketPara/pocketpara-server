@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 22:20:29
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-21 22:49:37
+ * @ Modified time: 2019-10-21 23:00:34
  * @ Description: Shift-controller (all user's shifts)
  */
 import { Request, Response } from 'express';
@@ -20,7 +20,8 @@ class ShiftController {
         "cycle",
         //"type",
         "crew",
-        "carId"
+        "carId",
+        "myRole"
     ];
 
     static add = async (req: Request, res: Response) => {
@@ -31,6 +32,7 @@ class ShiftController {
             carId,
             cycle,
             //type,
+            myRole,
             crew
         } = req.body;
 
@@ -91,6 +93,7 @@ class ShiftController {
         // assign values
         shift.car = car;
         shift.user = user;
+        shift.myRole = myRole || 0;
         shift.date = date;
         shift.cycle = cycle || 0;
         //shift.type = type || "?";
@@ -130,7 +133,8 @@ class ShiftController {
                 car: shift.car,
                 cycle: shift.cycle,
                 //type: shift.type,
-                crew: shift.crew
+                crew: shift.crew,
+                myRole: shift.myRole
             }
         });
 
@@ -207,6 +211,7 @@ class ShiftController {
             date,
             carId,
             cycle,
+            myRole,
             //type,
             crew
         } = req.body;
@@ -266,6 +271,7 @@ class ShiftController {
         // now update values
         shift.cycle = cycle || shift.cycle;
         shift.date = date || shift.date;
+        shift.myRole = myRole || shift.myRole;
         //shift.type = type || shift.type;
         if(crew) {
             shift.crew = (typeof crew === 'string') ? crew : (typeof crew === 'object') ? JSON.stringify(crew) : '[]';
@@ -300,7 +306,8 @@ class ShiftController {
                 carId: carId || shift.carId,
                 cycle: shift.cycle,
                 //type: shift.type,
-                crew: shift.crew
+                crew: shift.crew,
+                myRole: shift.myRole
             }
         });
 

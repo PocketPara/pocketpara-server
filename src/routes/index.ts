@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-07 17:06:32
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 23:15:02
+ * @ Modified time: 2019-10-23 22:54:24
  * @ Description: Main route handler, combines all other route handlers
  */
 import { Router } from 'express';
@@ -14,7 +14,9 @@ import car from "./car";
 import shift from "./shift";
 import medicalCategory from "./medicalCategory";
 import event from "./event";
+import mission from "./mission";
 import ErrorController from '../controller/ErrorController';
+
 
 const routes = Router();
 
@@ -26,6 +28,7 @@ routes.use("/car", car);
 routes.use("/shift", shift);
 routes.use("/medical-categories", medicalCategory);
 routes.use("/event", event);
+routes.use("/mission", mission);
 
 // 404 fallback
 routes.use("*", ErrorController.notFound);
