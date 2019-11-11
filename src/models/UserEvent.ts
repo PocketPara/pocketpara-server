@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 22:53:33
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-10 23:24:10
+ * @ Modified time: 2019-11-10 23:13:16
  * @ Description: Model definiton for user-created events 
  *                (called UserEvent due to already-defined javascript Event)
  */
@@ -28,5 +28,9 @@ export class UserEvent {
     // defines how they are ordered for the user
     @Column({nullable: true, default: 0 })
     order: number;
+
+    // sets active
+    @Column({ default: true })
+    active: boolean;
 
 }

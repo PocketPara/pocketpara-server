@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-10 23:01:05
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-16 12:50:09
+ * @ Modified time: 2019-11-11 20:01:40
  * @ Description: Controller for user-defined events 
  */
 
@@ -105,6 +105,10 @@ class UserEventController {
             userEvents = await userEventRepository.find({
                 where: {
                     user
+                },
+                order: {
+                    order: 'ASC',
+                    name: 'ASC'
                 }
             });
         } catch(error)  {
@@ -134,7 +138,8 @@ class UserEventController {
         // Get new values from body
         const {
             name,
-            order
+            order,
+            active
         } = req.body;
 
         // Attempt to find the user in the db
@@ -170,6 +175,9 @@ class UserEventController {
         // assign new values
         userEvent.name = name || userEvent.name;
         userEvent.order = order || userEvent.order;
+        if(active != null) {
+            userEvent.active = active;
+        }
 
         // Validate new values on model
         const errors = await validate(userEvent);
@@ -198,7 +206,8 @@ class UserEventController {
             userEvent: {
                 id: userEvent.id,
                 name: userEvent.name,
-                order: userEvent.order
+                order: userEvent.order,
+                active: userEvent.active
             }
         });
 

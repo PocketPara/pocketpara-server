@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 22:12:21
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-22 19:18:10
+ * @ Modified time: 2019-11-11 20:57:46
  * @ Description: Model definition for shifts
  */
 import {
@@ -43,8 +43,8 @@ export class Shift {
     @Column({ default: 0 })
     cycle: number;
 
-    @Column({ default: 0 })
-    myRole: number;
+    @Column({})
+    myRole: string;
 
     // The crew on the car
     // Stored as JSON...

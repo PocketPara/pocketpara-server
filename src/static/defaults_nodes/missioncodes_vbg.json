@@ -1,0 +1,122 @@
+[
+  {
+    "id": 21,
+    "name": "r1",
+    "color": "#f44336",
+    "isEmergency": true,
+    "description": "Notfall",
+    "order": 1571676641
+  },
+  {
+    "id": 22,
+    "name": "r2",
+    "color": "#ff5722",
+    "isEmergency": true,
+    "description": "NRTW-Notfall",
+    "order": 1571676654
+  },
+  {
+    "id": 23,
+    "name": "r2na",
+    "color": "#ff0000",
+    "isEmergency": true,
+    "description": "Notarzt-Einsatz",
+    "order": 1571676661
+  },
+  {
+    "id": 24,
+    "name": "r3",
+    "color": "#e91e63",
+    "isEmergency": true,
+    "description": "Großeinsatz",
+    "order": 1571676670
+  },
+  {
+    "id": 32,
+    "name": "r4",
+    "color": "#ff8eb4",
+    "isEmergency": true,
+    "description": "Katastrophe",
+    "order": 1571676684
+  },
+  {
+    "id": 33,
+    "name": "r5",
+    "color": "#ff8eb4",
+    "isEmergency": true,
+    "description": "Katastrophe",
+    "order": 1571676694
+  },
+  {
+    "id": 27,
+    "name": "r6",
+    "color": "#009688",
+    "isEmergency": false,
+    "description": "KTW",
+    "order": 1571676698
+  },
+  {
+    "id": 26,
+    "name": "r7",
+    "color": "#1abc9c",
+    "isEmergency": false,
+    "description": "KTW Dringlich",
+    "order": 1571676710
+  },
+  {
+    "id": 25,
+    "name": "r8",
+    "color": "#2196f3",
+    "isEmergency": false,
+    "description": "Rettungseinsatz",
+    "order": 1571676718
+  },
+  {
+    "id": 34,
+    "name": "r10",
+    "color": "#00bcd4",
+    "isEmergency": false,
+    "description": "Rufhilfe Passiv",
+    "order": 1571678244
+  },
+  {
+    "id": 28,
+    "name": "r12",
+    "color": "#ffc107",
+    "isEmergency": true,
+    "description": "Notfallverlegung",
+    "order": 1571678264
+  },
+  {
+    "id": 35,
+    "name": "r13",
+    "color": "#4caf50",
+    "isEmergency": false,
+    "description": "Fernfahrt",
+    "order": 1571678293
+  },
+  {
+    "id": 36,
+    "name": "r14",
+    "color": "#cddc39",
+    "isEmergency": false,
+    "description": "BHF-Fahrt",
+    "order": 1571678314
+  },
+  {
+    "id": 29,
+    "name": "r15",
+    "color": "#795548",
+    "isEmergency": false,
+    "description": "Materialtransport",
+    "order": 1571678325
+  },
+  {
+    "id": 37,
+    "name": "storno",
+    "color": "#808080",
+    "isEmergency": false,
+    "description": "Einsatz Storniert",
+    "order": 1571678390
+  }
+]

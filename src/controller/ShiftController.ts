@@ -2,7 +2,7 @@
  * @ Author: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
  * @ Create Time: 2019-10-09 22:20:29
  * @ Modified by: Lukas Fend 'Lksfnd' <fendlukas@pm.me>
- * @ Modified time: 2019-10-21 23:00:34
+ * @ Modified time: 2019-11-11 20:58:01
  * @ Description: Shift-controller (all user's shifts)
  */
 import { Request, Response } from 'express';
@@ -93,7 +93,7 @@ class ShiftController {
         // assign values
         shift.car = car;
         shift.user = user;
-        shift.myRole = myRole || 0;
+        shift.myRole = myRole;
         shift.date = date;
         shift.cycle = cycle || 0;
         //shift.type = type || "?";
